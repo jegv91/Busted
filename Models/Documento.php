@@ -17,6 +17,10 @@ class Documento {
 	 * @AttributeType String[]
 	 */
 	private $lineas;
+	/**
+	 * @AttributeType file
+	 */
+	private $path=realpath(dirname(__FILE__)).'Documentos/';
 
 
 	/**
@@ -45,13 +49,32 @@ class Documento {
 	 * Metodo encargado de dividir el documento a traves de un split quitando nuevas lineas y lineas
 	 * vacias
 	 */
-	private function DividirDocumento() {
+	private function dividirDocumento() {
 		$this->lineas = file($this->archivo, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 		if (isset($this->lineas) and empty($this->lineas) == false) {
 			//Filtramos el arreglo que tenemos con nuestra funcion simple
 			//M{1};
 			$this->lineas = array_filter($this->lineas, array($this, "filtrado"));		
 		}
+	}
+
+	/**
+	 * @access public
+	 * @return void
+	 * @ReturnType void
+	 */
+	public function subirDocumento() {
+		$target = $this->path.basename( $_FILES['uploaded']['name']);
+		move_uploaded_file($_FILES['uploaded']['tmp_name'], $target);
+	}
+
+	/**
+	 * @access public
+	 * @param file
+	 * @ReturnType void
+	 */
+	public function eliminarDocumento($file) {
+		unlink($file);
 	}
 
 }
