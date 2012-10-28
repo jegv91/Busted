@@ -10,54 +10,49 @@ require_once(realpath(dirname(__FILE__)) . '/Profesor.php');
  */
 class Documento {
 	/**
-	 * @AttributeType String
+	 * @AttributeType file
 	 */
-	private $_texto;
+	private $archivo;
 	/**
 	 * @AttributeType String[]
 	 */
-	private $_lineas;
-	/**
-	 * @AssociationType Revision
-	 */
-	public $_unnamed_Revision_;
-	/**
-	 * @AssociationType Comparar
-	 */
-	public $_unnamed_Comparar_;
-	/**
-	 * @AssociationType Biblioteca
-	 */
-	public $_unnamed_Biblioteca_;
-	/**
-	 * @AssociationType Profesor
-	 */
-	public $_unnamed_Profesor_;
+	private $lineas;
+
 
 	/**
 	 * @access public
-	 * @param aFile
+	 * @param file
+	 * Metodo constructor encargado de inicializar el documento con un archivo
 	 */
-	public function Documento($aFile) {
-		// Not yet implemented
+	public function __construct($file) {
+		$this->archivo = $file;
 	}
+
+
+	/**
+	 * @access public
+	 * @param name:String
+	 * Metodo magico "get" encargado de regresar cualquiera de los atributos de la clase
+	 */
+	public function __get($name) {
+        return $this->$name = $value;
+    }
 
 	/**
 	 * @access private
 	 * @return String[]
 	 * @ReturnType String[]
+	 * Metodo encargado de dividir el documento a traves de un split quitando nuevas lineas y lineas
+	 * vacias
 	 */
 	private function DividirDocumento() {
-		// Not yet implemented
+		$this->lineas = file($this->archivo, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		if (isset($this->lineas) and empty($this->lineas) == false) {
+			//Filtramos el arreglo que tenemos con nuestra funcion simple
+			//M{1};
+			$this->lineas = array_filter($this->lineas, array($this, "filtrado"));		
+		}
 	}
 
-	/**
-	 * @access public
-	 * @return String[]
-	 * @ReturnType String[]
-	 */
-	public function getLineas() {
-		return $this->_lineas;
-	}
 }
 ?>
