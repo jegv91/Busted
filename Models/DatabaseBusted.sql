@@ -1,0 +1,37 @@
+--Modelo para la base de datos de busted
+--Author: JEGV
+--Version: 1.0
+--Date: 27/10/12
+CREATE IF NOT EXISTS DATABASE Busted
+GO
+USE Busted
+GO
+CREATE TABLE Usuario(
+	Email VARCHAR(50) NOT NULL,
+	Nombre VARCHAR(50) NOT NULL,
+	Pass VARCHAR(16) NOT NULL,
+	Tipo INT NOT NULL,
+	PRIMARY KEY (Email)
+)Engine=INNODB;
+
+CREATE TABLE Documento(
+	ID INT NOT NULL,
+	URL VARCHAR(255) NOT NULL,
+	Tipo INT NOT NULL,
+	PRIMARY KEY (ID)
+)Engine=INNODB;
+
+CREATE TABLE Revision(
+	ID INT NOT NULL,
+	Fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	Documento INT NOT NULL,
+	Usuario VARCHAR(50) NOT NULL,
+	Resultado VARCHAR(50) NOT NULL,
+	PRIMARY KEY (ID),
+	FOREIGN KEY (Usuario) REFERENCES Usuario (Email),
+	FOREIGN KEY (Documento) REFERENCES Documento (ID)
+)Engine=INNODB;
+
+
+
+
