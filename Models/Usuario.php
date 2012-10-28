@@ -35,6 +35,5 @@ class Usuario{
 	public function set_correo($correo){
 		$this->correo = $correo;
     }
-	
 }
 ?>
