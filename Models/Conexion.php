@@ -1,9 +1,15 @@
 <?php
-	$dbhost = 'db.php-mysql-tutorial.com:3306';
-	$dbuser = 'root';
-	$dbpass = '';
+class Conexion{
+    private $_CON;
 
-	global $conn = mysql_connect($dbhost, $dbuser, $dbpass) or die ('Error connecting to mysql');
-	$dbname = 'busted';
-	mysql_select_db($dbname);
+    function __construct(){
+	$connection = array('localhost', 'root', '', 'busted');
+	$this->_CON =  mysql_connect($connection[0], $connection[1], $connection[2]);
+	mysql_select_db($connection[3], $this->_CON);
+    }
+
+    public function connect(){
+	return $this->_CON;
+    }
+}
 ?>
